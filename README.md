@@ -164,9 +164,9 @@ Once you have found the policies vulnerable to the authorization bypass, there a
                 "iam:CreateAccessKey"
             ],
             "Resource": [
-                "arn:aws:iam::911722114403:user/DanaH@acme.com",
-                "arn:aws:iam::911722114403:user/DavidZ@acme.com",
-                "arn:aws:iam::911722114403:user/EladS@acme.com"
+                "arn:aws:iam::123456789999:user/DanaH@acme.com",
+                "arn:aws:iam::123456789999:user/DavidZ@acme.com",
+                "arn:aws:iam::123456789999:user/EladS@acme.com"
             ]
         }
     ]
