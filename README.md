@@ -145,5 +145,58 @@ Done
 
 In this console output we can see that our ProtectManagers deny policy is ineffective and vulnerable to attacks such as privilege escalation mentioned above.
 
+### Remediation
+
+Once you have found the policies vulnerable to the authorization bypass, there are two possible ways to remediate the vulnerability and fix the policy:
+
+**OPTION 1:** Define all relevant users in the resource field instead of groups to avoid ineffective iam actions such as the following example:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Deny",
+            "Action": [
+                "iam:CreateLoginProfile",
+                "iam:ChangePassword",
+                "iam:CreateAccessKey"
+            ],
+            "Resource": [
+                "arn:aws:iam::911722114403:user/DanaH@acme.com",
+                "arn:aws:iam::911722114403:user/DavidZ@acme.com",
+                "arn:aws:iam::911722114403:user/EladS@acme.com"
+            ]
+        }
+    ]
+}
+```
+
+**OPTION 2:** Use condition in the policy with iam:ResourceTag in place such as the following example:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Deny",
+            "Action": [
+                "iam:CreateLoginProfile",
+                "iam:ChangePassword",
+                "iam:CreateAccessKey"
+            ],
+            "Resource": "*",
+            "Condition": {
+                "ForAnyValue:StringEquals": {
+                    "iam:ResourceTag/group": "managers"
+                }
+            }
+        }
+    ]
+}
+```
+
 ## License
 This repository is available under the [Apache License 2.0](https://github.com/lightspin-tech/red-shadow/blob/main/LICENSE).
