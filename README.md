@@ -149,14 +149,14 @@ In this console output we can see that our ProtectManagers deny policy is ineffe
 
 Once you have found the policies vulnerable to the authorization bypass, there are two possible ways to remediate the vulnerability and fix the policy:
 
-**OPTION 1:** Define all relevant users in the resource field instead of groups to avoid ineffective iam actions such as the following example:
+**OPTION 1:** Define all relevant users in the resource field instead of groups to avoid ineffective iam actions, and deny all group actions, such as the following example:
 
 ```json
 {
     "Version": "2012-10-17",
     "Statement": [
         {
-            "Sid": "VisualEditor0",
+            "Sid": "DenySpecificUserActions",
             "Effect": "Deny",
             "Action": [
                 "iam:CreateLoginProfile",
@@ -168,6 +168,12 @@ Once you have found the policies vulnerable to the authorization bypass, there a
                 "arn:aws:iam::123456789999:user/DavidZ@acme.com",
                 "arn:aws:iam::123456789999:user/EladS@acme.com"
             ]
+        },
+        {
+            "Sid": "DenyAllGroupActions",
+            "Effect": "Deny",
+            "Action": "*",
+            "Resource": "arn:aws:iam::123456789999:group/managers"
         }
     ]
 }
