@@ -21,7 +21,7 @@ The tool detects the misconfigurations in the following IAM Objects:
 
 
 ### Research Summary
-AWS IAM evaluation logic for deny policies applied to groups does not work the same way as most security engineers may be used to with Active Directory or other authorization mechanisms.
+AWS IAM evaluation logic for deny policies applied to groups does not work the same way as most security engineers may be used to with other authorization mechanisms.
 
 Suppose a policy with a group resource has an explicit deny. In that case, this will only impact group actions and not user actions, opening organizations up to misconfiguration and vulnerabilities if they assume the process to be the same as with Active Directory, for example.
 
